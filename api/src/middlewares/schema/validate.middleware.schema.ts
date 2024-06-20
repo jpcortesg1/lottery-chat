@@ -17,8 +17,12 @@ export const validate = (
       stripUnknown: false,
     };
 
+    // Get type request and define that to validate
+    const typeRequest = req.method;
+    const toValidate = typeRequest === "GET" ? req.query : req.body;
+
     // Validate schema
-    const { error, value } = schema.validate(req.body, options);
+    const { error, value } = schema.validate(toValidate, options);
 
     // Validate error and response
     if (error) {
