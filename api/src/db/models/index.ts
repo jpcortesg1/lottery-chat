@@ -1,5 +1,7 @@
 import { Sequelize } from 'sequelize';
-import initializeUser from './user';
+
+import initializeUser from './User';
+import initializeLottery from './Lottery';
 
 const env = process.env.NODE_ENV || 'development';
 const config = require(__dirname + '/../config/config.json')[env];
@@ -14,6 +16,7 @@ if (config.use_env_variable) {
 const db = {
   sequelize,
   User: initializeUser(sequelize),
+  Lottery: initializeLottery(sequelize),
 };
 
 export default db;

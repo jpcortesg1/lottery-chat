@@ -1,6 +1,7 @@
-import db from "../db/models";
 import { InferCreationAttributes } from "sequelize";
-import { User } from "../db/models/user";
+
+import db from "../db/models";
+import { User } from "../db/models/User";
 
 class UserService {
   model = db.User;

@@ -1,14 +1,14 @@
 import { Request, Response } from "express";
 
-import { userService } from "../../services/user.service";
+import { lotteryService } from "../../services/lottery.service";
 
 export const create = async (req: Request, res: Response) => {
   try {
-    const newUser = await userService.create(req.body);
+    const newLottery = await lotteryService.create(req.body);
     return res.json({
-      message: "User created",
+      message: "Lottery created",
       status: "success",
-      data: newUser,
+      data: newLottery,
     });
   } catch (error) {
     if (error instanceof Error) {
@@ -21,4 +21,4 @@ export const create = async (req: Request, res: Response) => {
         .status(500);
     }
   }
-}
+};

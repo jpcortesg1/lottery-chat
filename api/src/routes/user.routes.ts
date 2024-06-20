@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response, Router } from "express";
+
 import { createUserController } from "../controllers/user/index.controller";
 import { validateSchemaMiddleware } from "../middlewares/schema/index.middleware.schema";
 import { createUserSchema } from "../schemas/user/index.schema";

@@ -1,7 +1,7 @@
 import { InferCreationAttributes } from "sequelize";
 import Joi from "joi";
 
-import { User } from "../../db/models/user";
+import { User } from "../../db/models/User";
 
 export const create = Joi.object<InferCreationAttributes<User>>({
   documentType: Joi.string().required(),
