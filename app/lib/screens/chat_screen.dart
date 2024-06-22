@@ -168,6 +168,8 @@ class _ChatPageState extends State<ChatPage> {
       });
       _currentStep = 0; // Reset the conversation flow to the beginning
       _errorCount = 0; // Reset the error count
+      _tickets.clear();
+      // _messages.clear();
     } else {
       _messages.add({
         'text': "No entiendo tu respuesta. Por favor, inténtalo de nuevo.",
