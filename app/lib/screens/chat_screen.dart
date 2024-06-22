@@ -30,8 +30,10 @@ class _ChatPageState extends State<ChatPage> {
 
   Future<String> _fetchLotteryData(String lotteryName) async {
     try {
+      print("hola");
       final url = Uri.parse(
-          'http://192.168.1.5:8000/api/v1/lotteries?lotteryName=$lotteryName');
+          'http://192.168.0.22:8000/api/v1/lotteries?lotteryName=$lotteryName');
+      print(url);
       final response = await http.get(url);
 
       if (response.statusCode == 200) {
@@ -67,6 +69,7 @@ class _ChatPageState extends State<ChatPage> {
             'isUserMessage': false
           });
           _currentStep++;
+          _errorCount = 0;
         } else if (_currentStep == 1) {
           _lotteryName = userMessage; // Store the chosen lottery name
           _fetchLotteryData(userMessage).then((response) {
@@ -78,6 +81,7 @@ class _ChatPageState extends State<ChatPage> {
                   'isUserMessage': false
                 });
                 _currentStep++;
+                _errorCount = 0;
               } else {
                 _handleError();
               }
@@ -92,18 +96,20 @@ class _ChatPageState extends State<ChatPage> {
               'isUserMessage': false
             });
             _currentStep++;
+            _errorCount = 0;
           } else {
             _handleError();
           }
         } else if (_currentStep == 3) {
           if (_isValidNumber(userMessage)) {
             _chosenSeries = userMessage; // Store the chosen series
-            _tickets.add({'numbers': _chosenNumbers, 'series': _chosenSeries});
+            _tickets.add({'numbers': _chosenNumbers, 'series': _chosenSeries, 'lottery': _lotteryName});
             _messages.add({
               'text': "Has solicitado jugar con los números: $_chosenNumbers en la serie: $_chosenSeries. ¿Deseas agregar otro boleto? (sí/no)",
               'isUserMessage': false
             });
             _currentStep++;
+            _errorCount = 0;
           } else {
             _handleError();
           }
@@ -113,7 +119,7 @@ class _ChatPageState extends State<ChatPage> {
               'text': "¿Qué lotería deseas jugar?",
               'isUserMessage': false
             });
-            _currentStep = 2; // Go back to the step to choose a lottery
+            _currentStep = 1; // Go back to the step to choose a lottery
           } else if (userMessage.toLowerCase() == 'no') {
             String ticketSummary = _tickets.map((ticket) => "Números: ${ticket['numbers']}, Serie: ${ticket['series']}").join('\n');
             _messages.add({
@@ -121,13 +127,14 @@ class _ChatPageState extends State<ChatPage> {
               'isUserMessage': false
             });
             _currentStep++;
+            _errorCount = 0;
           } else {
             _handleError();
           }
         } else if (_currentStep == 5) {
           if (userMessage.toLowerCase() == 'si' || userMessage.toLowerCase() == 'sí') {
             _messages.add({
-              'text': "Compra confirmada para la lotería $_lotteryName con los siguientes boletos:\n${_tickets.map((ticket) => "Números: ${ticket['numbers']}, Serie: ${ticket['series']}").join('\n')}\n¡Buena suerte!",
+              'text': "Compra confirmada con los siguientes boletos:\n${_tickets.map((ticket) => "Loteria: ${ticket['lottery']} Número: ${ticket['numbers']}, Serie: ${ticket['series']}").join('\n')}\n¡Buena suerte!",
               'isUserMessage': false
             });
           } else if (userMessage.toLowerCase() == 'no') {

@@ -1,6 +1,6 @@
 import 'package:app/screens/chat_screen.dart';
-import 'package:app/screens/home_page.dart';
-import 'package:app/screens/login_page.dart';
+// import 'package:app/screens/home_page.dart';
+// import 'package:app/screens/login_page.dart';
 import 'package:app/theme/light_mode.dart';
 import 'package:flutter/material.dart';
 
