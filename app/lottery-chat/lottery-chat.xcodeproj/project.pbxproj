@@ -1,0 +1,614 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		B472610E2C265A7B00EAB2CC /* lottery_chatApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B472610D2C265A7B00EAB2CC /* lottery_chatApp.swift */; };
+		B47261102C265A7B00EAB2CC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B472610F2C265A7B00EAB2CC /* ContentView.swift */; };
+		B47261122C265A7D00EAB2CC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B47261112C265A7D00EAB2CC /* Assets.xcassets */; };
+		B47261162C265A7D00EAB2CC /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B47261152C265A7D00EAB2CC /* Preview Assets.xcassets */; };
+		B47261202C265A7D00EAB2CC /* lottery_chatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B472611F2C265A7D00EAB2CC /* lottery_chatTests.swift */; };
+		B472612A2C265A7D00EAB2CC /* lottery_chatUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B47261292C265A7D00EAB2CC /* lottery_chatUITests.swift */; };
+		B472612C2C265A7D00EAB2CC /* lottery_chatUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B472612B2C265A7D00EAB2CC /* lottery_chatUITestsLaunchTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		B472611C2C265A7D00EAB2CC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B47261022C265A7B00EAB2CC /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B47261092C265A7B00EAB2CC;
+			remoteInfo = "lottery-chat";
+		};
+		B47261262C265A7D00EAB2CC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B47261022C265A7B00EAB2CC /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B47261092C265A7B00EAB2CC;
+			remoteInfo = "lottery-chat";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		B472610A2C265A7B00EAB2CC /* lottery-chat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "lottery-chat.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B472610D2C265A7B00EAB2CC /* lottery_chatApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = lottery_chatApp.swift; sourceTree = "<group>"; };
+		B472610F2C265A7B00EAB2CC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		B47261112C265A7D00EAB2CC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B47261132C265A7D00EAB2CC /* lottery_chat.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = lottery_chat.entitlements; sourceTree = "<group>"; };
+		B47261152C265A7D00EAB2CC /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		B472611B2C265A7D00EAB2CC /* lottery-chatTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "lottery-chatTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B472611F2C265A7D00EAB2CC /* lottery_chatTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = lottery_chatTests.swift; sourceTree = "<group>"; };
+		B47261252C265A7D00EAB2CC /* lottery-chatUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "lottery-chatUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B47261292C265A7D00EAB2CC /* lottery_chatUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = lottery_chatUITests.swift; sourceTree = "<group>"; };
+		B472612B2C265A7D00EAB2CC /* lottery_chatUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = lottery_chatUITestsLaunchTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		B47261072C265A7B00EAB2CC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B47261182C265A7D00EAB2CC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B47261222C265A7D00EAB2CC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		B47261012C265A7B00EAB2CC = {
+			isa = PBXGroup;
+			children = (
+				B472610C2C265A7B00EAB2CC /* lottery-chat */,
+				B472611E2C265A7D00EAB2CC /* lottery-chatTests */,
+				B47261282C265A7D00EAB2CC /* lottery-chatUITests */,
+				B472610B2C265A7B00EAB2CC /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		B472610B2C265A7B00EAB2CC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B472610A2C265A7B00EAB2CC /* lottery-chat.app */,
+				B472611B2C265A7D00EAB2CC /* lottery-chatTests.xctest */,
+				B47261252C265A7D00EAB2CC /* lottery-chatUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B472610C2C265A7B00EAB2CC /* lottery-chat */ = {
+			isa = PBXGroup;
+			children = (
+				B472610D2C265A7B00EAB2CC /* lottery_chatApp.swift */,
+				B472610F2C265A7B00EAB2CC /* ContentView.swift */,
+				B47261112C265A7D00EAB2CC /* Assets.xcassets */,
+				B47261132C265A7D00EAB2CC /* lottery_chat.entitlements */,
+				B47261142C265A7D00EAB2CC /* Preview Content */,
+			);
+			path = "lottery-chat";
+			sourceTree = "<group>";
+		};
+		B47261142C265A7D00EAB2CC /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				B47261152C265A7D00EAB2CC /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		B472611E2C265A7D00EAB2CC /* lottery-chatTests */ = {
+			isa = PBXGroup;
+			children = (
+				B472611F2C265A7D00EAB2CC /* lottery_chatTests.swift */,
+			);
+			path = "lottery-chatTests";
+			sourceTree = "<group>";
+		};
+		B47261282C265A7D00EAB2CC /* lottery-chatUITests */ = {
+			isa = PBXGroup;
+			children = (
+				B47261292C265A7D00EAB2CC /* lottery_chatUITests.swift */,
+				B472612B2C265A7D00EAB2CC /* lottery_chatUITestsLaunchTests.swift */,
+			);
+			path = "lottery-chatUITests";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		B47261092C265A7B00EAB2CC /* lottery-chat */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B472612F2C265A7D00EAB2CC /* Build configuration list for PBXNativeTarget "lottery-chat" */;
+			buildPhases = (
+				B47261062C265A7B00EAB2CC /* Sources */,
+				B47261072C265A7B00EAB2CC /* Frameworks */,
+				B47261082C265A7B00EAB2CC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "lottery-chat";
+			productName = "lottery-chat";
+			productReference = B472610A2C265A7B00EAB2CC /* lottery-chat.app */;
+			productType = "com.apple.product-type.application";
+		};
+		B472611A2C265A7D00EAB2CC /* lottery-chatTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B47261322C265A7D00EAB2CC /* Build configuration list for PBXNativeTarget "lottery-chatTests" */;
+			buildPhases = (
+				B47261172C265A7D00EAB2CC /* Sources */,
+				B47261182C265A7D00EAB2CC /* Frameworks */,
+				B47261192C265A7D00EAB2CC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B472611D2C265A7D00EAB2CC /* PBXTargetDependency */,
+			);
+			name = "lottery-chatTests";
+			productName = "lottery-chatTests";
+			productReference = B472611B2C265A7D00EAB2CC /* lottery-chatTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		B47261242C265A7D00EAB2CC /* lottery-chatUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B47261352C265A7D00EAB2CC /* Build configuration list for PBXNativeTarget "lottery-chatUITests" */;
+			buildPhases = (
+				B47261212C265A7D00EAB2CC /* Sources */,
+				B47261222C265A7D00EAB2CC /* Frameworks */,
+				B47261232C265A7D00EAB2CC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B47261272C265A7D00EAB2CC /* PBXTargetDependency */,
+			);
+			name = "lottery-chatUITests";
+			productName = "lottery-chatUITests";
+			productReference = B47261252C265A7D00EAB2CC /* lottery-chatUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		B47261022C265A7B00EAB2CC /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1540;
+				LastUpgradeCheck = 1540;
+				TargetAttributes = {
+					B47261092C265A7B00EAB2CC = {
+						CreatedOnToolsVersion = 15.4;
+					};
+					B472611A2C265A7D00EAB2CC = {
+						CreatedOnToolsVersion = 15.4;
+						TestTargetID = B47261092C265A7B00EAB2CC;
+					};
+					B47261242C265A7D00EAB2CC = {
+						CreatedOnToolsVersion = 15.4;
+						TestTargetID = B47261092C265A7B00EAB2CC;
+					};
+				};
+			};
+			buildConfigurationList = B47261052C265A7B00EAB2CC /* Build configuration list for PBXProject "lottery-chat" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = B47261012C265A7B00EAB2CC;
+			productRefGroup = B472610B2C265A7B00EAB2CC /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				B47261092C265A7B00EAB2CC /* lottery-chat */,
+				B472611A2C265A7D00EAB2CC /* lottery-chatTests */,
+				B47261242C265A7D00EAB2CC /* lottery-chatUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		B47261082C265A7B00EAB2CC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B47261162C265A7D00EAB2CC /* Preview Assets.xcassets in Resources */,
+				B47261122C265A7D00EAB2CC /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B47261192C265A7D00EAB2CC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B47261232C265A7D00EAB2CC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		B47261062C265A7B00EAB2CC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B47261102C265A7B00EAB2CC /* ContentView.swift in Sources */,
+				B472610E2C265A7B00EAB2CC /* lottery_chatApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B47261172C265A7D00EAB2CC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B47261202C265A7D00EAB2CC /* lottery_chatTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B47261212C265A7D00EAB2CC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B472612C2C265A7D00EAB2CC /* lottery_chatUITestsLaunchTests.swift in Sources */,
+				B472612A2C265A7D00EAB2CC /* lottery_chatUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		B472611D2C265A7D00EAB2CC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B47261092C265A7B00EAB2CC /* lottery-chat */;
+			targetProxy = B472611C2C265A7D00EAB2CC /* PBXContainerItemProxy */;
+		};
+		B47261272C265A7D00EAB2CC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B47261092C265A7B00EAB2CC /* lottery-chat */;
+			targetProxy = B47261262C265A7D00EAB2CC /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		B472612D2C265A7D00EAB2CC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		B472612E2C265A7D00EAB2CC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		B47261302C265A7D00EAB2CC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "lottery-chat/lottery_chat.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"lottery-chat/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 14.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "-.lottery-chat";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		B47261312C265A7D00EAB2CC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "lottery-chat/lottery_chat.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"lottery-chat/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 14.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "-.lottery-chat";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		B47261332C265A7D00EAB2CC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				MACOSX_DEPLOYMENT_TARGET = 14.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "-.lottery-chatTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/lottery-chat.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/lottery-chat";
+			};
+			name = Debug;
+		};
+		B47261342C265A7D00EAB2CC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				MACOSX_DEPLOYMENT_TARGET = 14.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "-.lottery-chatTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/lottery-chat.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/lottery-chat";
+			};
+			name = Release;
+		};
+		B47261362C265A7D00EAB2CC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				MACOSX_DEPLOYMENT_TARGET = 14.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "-.lottery-chatUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "lottery-chat";
+			};
+			name = Debug;
+		};
+		B47261372C265A7D00EAB2CC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				MACOSX_DEPLOYMENT_TARGET = 14.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "-.lottery-chatUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "lottery-chat";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		B47261052C265A7B00EAB2CC /* Build configuration list for PBXProject "lottery-chat" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B472612D2C265A7D00EAB2CC /* Debug */,
+				B472612E2C265A7D00EAB2CC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B472612F2C265A7D00EAB2CC /* Build configuration list for PBXNativeTarget "lottery-chat" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B47261302C265A7D00EAB2CC /* Debug */,
+				B47261312C265A7D00EAB2CC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B47261322C265A7D00EAB2CC /* Build configuration list for PBXNativeTarget "lottery-chatTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B47261332C265A7D00EAB2CC /* Debug */,
+				B47261342C265A7D00EAB2CC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B47261352C265A7D00EAB2CC /* Build configuration list for PBXNativeTarget "lottery-chatUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B47261362C265A7D00EAB2CC /* Debug */,
+				B47261372C265A7D00EAB2CC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = B47261022C265A7B00EAB2CC /* Project object */;
+}
