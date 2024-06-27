@@ -1,5 +1,5 @@
-import 'package:app/models/Messages.dart';
-import 'package:app/providers/message.dart';
+import 'package:app/models/messages.dart';
+import 'package:app/providers/message_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

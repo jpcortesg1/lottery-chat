@@ -1,5 +1,4 @@
-import 'package:app/main.dart';
-import 'package:app/providers/message.dart';
+import 'package:app/providers/message_provider.dart';
 
 class Stepp {
   final String text;
