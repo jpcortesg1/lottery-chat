@@ -10,7 +10,7 @@ class MyAppState extends ChangeNotifier {
   final LotteryProvider lotteryProvider;
 
   final List<Message> messages = [];
-  final Lottery lottery = Lottery();
+  Lottery lottery = Lottery();
   var currentStep = 0;
   var errorCount = 0;
   var minSeries = 0;
@@ -45,6 +45,11 @@ class MyAppState extends ChangeNotifier {
     currentStep++;
     errorCount = 0;
     notifyListeners();
+  }
+
+  void genericMessage(){
+    messages.add(Message.create('Esto es un chat exclusivo de loteria', false));
+    nextStep();
   }
 
   void fetchLotteryData() async {
@@ -110,6 +115,7 @@ class MyAppState extends ChangeNotifier {
         'Has solicitado jugar con los números: ${lottery.number} en la serie: ${lottery.series}.',
         false));
     lotteryProvider.addLottery(lottery);
+    lottery = Lottery();
     nextStep();
   }
 
@@ -165,8 +171,8 @@ class MyAppState extends ChangeNotifier {
   final List<Stepp> steps = [
     Stepp(
         text:
-            "Esto es un chat exclusivo de loteria, ¿Qué lotería deseas comprar?",
-        action: (state) => state.nextStep()),
+            "¿Qué lotería deseas comprar?",
+        action: (state) => state.genericMessage()),
     Stepp(
         text: "¿Cuáles números quieres jugar?",
         action: (state) => state.fetchLotteryData()),
