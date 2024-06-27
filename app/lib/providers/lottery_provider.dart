@@ -1,6 +1,9 @@
 import 'package:app/models/lottery.dart';
 import 'package:flutter/material.dart';
 
+/// A provider class for managing lottery data.
+///
+/// This class extends [ChangeNotifier] to provide change notification to its listeners.
 class LotteryProvider extends ChangeNotifier {
   final List<Lottery> lotteries = [];
 

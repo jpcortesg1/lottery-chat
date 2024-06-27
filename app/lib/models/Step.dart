@@ -1,5 +1,6 @@
 import 'package:app/providers/message_provider.dart';
 
+/// Represents a step in a process or workflow.
 class Stepp {
   final String text;
   final Function(MyAppState) action;

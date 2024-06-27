@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+/// Represents the state of the MyApp application.
+/// This class extends [ChangeNotifier] to provide change notification to its listeners.
 class MyAppState extends ChangeNotifier {
   final LotteryProvider lotteryProvider;
 
@@ -18,26 +20,31 @@ class MyAppState extends ChangeNotifier {
 
   MyAppState({required this.lotteryProvider});
 
-  void managementError() {
+  void addMessage(Message message) {
+    messages.add(message);
+    steps[currentStep].action(this);
+  }
+
+  void _managementError() {
     errorCount++;
     if (errorCount == 3) {
       messages.add(Message.create(
           'Has cometido demasiados errores, por favor intenta de nuevo',
           false));
       notifyListeners();
-      reset();
+      _reset();
       return;
     }
     messages.add(Message.create('Error, por favor intenta de nuevo', false));
     notifyListeners();
   }
 
-  void addMessage(Message message) {
-    messages.add(message);
-    steps[currentStep].action(this);
+  bool _isValidNumber(String input) {
+    final number = int.tryParse(input);
+    return number != null && number > 0;
   }
 
-  void nextStep() {
+  void _nextStep() {
     String text = steps[currentStep].text;
     if (text.isNotEmpty) {
       messages.add(Message.create(text, false));
@@ -47,9 +54,17 @@ class MyAppState extends ChangeNotifier {
     notifyListeners();
   }
 
-  void genericMessage(){
+  void _reset() {
+    messages.clear();
+    lotteryProvider.reset();
+    currentStep = 0;
+    errorCount = 0;
+    notifyListeners();
+  }
+
+  void genericMessage() {
     messages.add(Message.create('Esto es un chat exclusivo de loteria', false));
-    nextStep();
+    _nextStep();
   }
 
   void fetchLotteryData() async {
@@ -67,7 +82,7 @@ class MyAppState extends ChangeNotifier {
       if (data.isEmpty) {
         messages
             .add(Message.create('La lotería $lastMessage no existe', false));
-        managementError();
+        _managementError();
         notifyListeners();
         return;
       }
@@ -77,15 +92,10 @@ class MyAppState extends ChangeNotifier {
       print(maxSeries);
       lottery.setName(lastMessage);
       messages.add(Message.create('Lotería encontrada: $lastMessage', false));
-      nextStep();
+      _nextStep();
     } catch (error) {
       print(error);
     }
-  }
-
-  bool _isValidNumber(String input) {
-    final number = int.tryParse(input);
-    return number != null && number > 0;
   }
 
   void validateLottery() {
@@ -93,11 +103,11 @@ class MyAppState extends ChangeNotifier {
     if (!_isValidNumber(lastMessage) || lastMessage.length != 4) {
       messages.add(Message.create('Numero no valido vuelve a intentar', false));
       notifyListeners();
-      managementError();
+      _managementError();
       return;
     }
     lottery.setNumber(lastMessage);
-    nextStep();
+    _nextStep();
   }
 
   void validateSeries() {
@@ -107,7 +117,7 @@ class MyAppState extends ChangeNotifier {
         int.parse(lastMessage) > maxSeries) {
       messages.add(Message.create('Serie no valida, vuelve a intentar', false));
       notifyListeners();
-      managementError();
+      _managementError();
       return;
     }
     lottery.setSeries(lastMessage);
@@ -116,40 +126,32 @@ class MyAppState extends ChangeNotifier {
         false));
     lotteryProvider.addLottery(lottery);
     lottery = Lottery();
-    nextStep();
+    _nextStep();
   }
 
   void canBuyMoreTickets() {
     String lastMessage = messages.last.text;
     if (lastMessage.toLowerCase() == 'si') {
       currentStep = 0;
-      nextStep();
+      _nextStep();
       return;
     }
     if (lastMessage.toLowerCase() == 'no') {
-      nextStep();
+      _nextStep();
       steps[currentStep].action(this);
       return;
     }
     messages
         .add(Message.create('Respuesta no valida, vuelve a intentar', false));
     notifyListeners();
-    managementError();
-  }
-
-  void reset() {
-    messages.clear();
-    lotteryProvider.reset();
-    currentStep = 0;
-    errorCount = 0;
-    notifyListeners();
+    _managementError();
   }
 
   void rememberBuy() {
     String message = lotteryProvider.messageOfAllLoteries();
     print(message);
     messages.add(Message.create(message, false));
-    nextStep();
+    _nextStep();
     notifyListeners();
   }
 
@@ -157,21 +159,20 @@ class MyAppState extends ChangeNotifier {
     String lastMessage = messages.last.text;
     if (lastMessage.toLowerCase() == 'si') {
       messages.add(Message.create('Compra confirmada', false));
-      nextStep();
+      _nextStep();
       currentStep = 0;
       return;
     }
     if (lastMessage.toLowerCase() == 'no') {
       messages.add(Message.create('Compra cancelada', false));
-      reset();
+      _reset();
       return;
     }
   }
 
   final List<Stepp> steps = [
     Stepp(
-        text:
-            "¿Qué lotería deseas comprar?",
+        text: "¿Qué lotería deseas comprar?",
         action: (state) => state.genericMessage()),
     Stepp(
         text: "¿Cuáles números quieres jugar?",

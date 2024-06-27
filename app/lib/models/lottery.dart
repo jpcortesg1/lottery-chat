@@ -1,3 +1,4 @@
+/// Represents a lottery.
 class Lottery {
   String? id;
   String? name;

@@ -1,3 +1,4 @@
+/// Represents a message in the chat system.
 class Message {
   final String id;
   final String text;

@@ -3,6 +3,10 @@ import 'package:app/providers/message_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+/// Represents the chat screen page.
+/// 
+/// This page is responsible for displaying the chat screen, where users can
+/// send and receive messages.
 class ChatPage extends StatefulWidget {
   const ChatPage({super.key});
 
