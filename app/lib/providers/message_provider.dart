@@ -6,8 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-/// Represents the state of the MyApp application.
-/// This class extends [ChangeNotifier] to provide change notification to its listeners.
 class MyAppState extends ChangeNotifier {
   final LotteryProvider lotteryProvider;
 
@@ -79,34 +77,26 @@ class MyAppState extends ChangeNotifier {
           'http://192.168.1.7:8000/api/v1/lotteries?lotteryName=$lastMessage');
       final response = await http.get(url);
 
-      // Imprimir el estado de la respuesta
       print('Response status: ${response.statusCode}');
       if (response.statusCode != 200) {
         throw Exception('Failed to load lottery data');
       }
 
-      // Imprimir el cuerpo de la respuesta
       print('Response body: ${response.body}');
       final Map<String, dynamic> baseData = json.decode(response.body);
-
-      // Imprimir la estructura de baseData
       print('baseData: $baseData');
 
-      // Verificar si 'data' está presente y no es null
       if (baseData['data'] == null) {
         print('data is null');
         throw Exception('data is null');
       }
 
-      // Verificar si 'data' es una lista
       if (!(baseData['data'] is List)) {
         print('data is not a list');
         throw Exception('data is not a list');
       }
 
       final List<dynamic> data = baseData['data'];
-
-      // Imprimir el contenido de 'data'
       print('data: $data');
 
       if (data.isEmpty) {
@@ -132,45 +122,40 @@ class MyAppState extends ChangeNotifier {
     }
   }
 
-void createUserData() async {
-  try {
-    final url = Uri.parse('http://192.168.1.7:8000/api/v1/users/create-update');
+  void createUserData() async {
+    try {
+      final url =
+          Uri.parse('http://192.168.1.7:8000/api/v1/users/create-update');
 
-        if (!_isValidNumber(identification)) {
-      throw Exception('El campo "document" debe ser un número');
+      Map<String, dynamic> userData = {
+        "name": name,
+        "document": int.parse(identification),
+        "cellphone": phoneNumber,
+        "email": email,
+      };
+
+      final response = await http.post(
+        url,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(userData),
+      );
+
+      print('Response status: ${response.statusCode}');
+      print('Response body: ${response.body}');
+
+      if (response.statusCode == 200) {
+        messages.add(Message.create('Datos creados correctamente', false));
+      } else {
+        throw Exception('Failed to create user data');
+      }
+    } catch (error) {
+      print('Error: $error');
+      messages.add(Message.create('Error al Crear Datos', false));
+      _managementError();
     }
-    
-    Map<String, dynamic> userData = {
-      "name": name,
-      "document": int.parse(identification),
-      "cellphone": phoneNumber,
-      "email": email,
-    };
-
-    final response = await http.post(
-      url,
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(userData),
-    );
-
-    print('Response status: ${response.statusCode}');
-    print('Response body: ${response.body}');
-
-    if (response.statusCode == 200) {
-      messages.add(Message.create('Datos creados correctamente', false));
-      // Realizar acciones adicionales si es necesario
-    } else {
-      throw Exception('Failed to create user data');
-    }
-
-  } catch (error) {
-    print('Error: $error');
-    messages.add(Message.create('Error al Crear Datos', false));
-    _managementError();
   }
-}
 
   void validateLottery() {
     String lastMessage = messages.last.text;
@@ -223,7 +208,6 @@ void createUserData() async {
 
   void rememberBuy() {
     String message = lotteryProvider.messageOfAllLoteries();
-    print(message);
     messages.add(Message.create(message, false));
     _nextStep();
     notifyListeners();
@@ -245,9 +229,20 @@ void createUserData() async {
   }
 
   void askForIdentification() {
+    _nextStep();
+  }
+
+  void validateIdentification() {
     String lastMessage = messages.last.text;
+    if (!_isValidNumber(lastMessage)) {
+      messages.add(Message.create(
+          'Identificación no válida, por favor intenta de nuevo', false));
+      notifyListeners();
+      _managementError();
+      return;
+    }
     identification = lastMessage;
-    _nextStep(); 
+    _nextStep();
   }
 
   void askForEmail() {
@@ -268,26 +263,19 @@ void createUserData() async {
     _nextStep();
   }
 
-void confirmUserInfo() {
-  // Obtener el último mensaje del usuario
-  String lastMessage = messages.last.text.toLowerCase();
-  
-  if (lastMessage == 'si') {
-    // Si el usuario confirma con "si", agrega los mensajes y crea los datos del usuario
+  void confirmUserInfo() {
     messages.add(Message.create('Identificación: $identification', false));
     messages.add(Message.create('Correo: $email', false));
     messages.add(Message.create('Celular: $phoneNumber', false));
     messages.add(Message.create('Nombre: $name', false));
-    
-    createUserData();
-    _nextStep(); // Avanza al siguiente paso
-  } else {
-    // Si el usuario no confirma, maneja el caso aquí (por ejemplo, vuelve a preguntar o reinicia el proceso)
-    messages.add(Message.create('Por favor confirma los datos para continuar', false));
+    String lastMessage = messages.last.text;
+    if (lastMessage.toLowerCase() == 'si') {
+      createUserData();
+      _nextStep();
+      notifyListeners();
+      return;
+    }
   }
-  notifyListeners(); // Notifica a los listeners para actualizar la UI
-}
-
 
   final List<Stepp> steps = [
     Stepp(
@@ -302,7 +290,6 @@ void confirmUserInfo() {
     Stepp(
         text: "¿Deseas agregar otro boleto? (sí/no)",
         action: (state) => state.validateSeries()),
-    Stepp(text: "", action: (state) => state.canBuyMoreTickets()),
     Stepp(
         text: "Por favor, proporciona tu identificación:",
         action: (state) => state.askForIdentification()),
