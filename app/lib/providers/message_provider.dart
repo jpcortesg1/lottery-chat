@@ -18,6 +18,11 @@ class MyAppState extends ChangeNotifier {
   var minSeries = 0;
   var maxSeries = 0;
 
+  String identification = '';
+  String email = '';
+  String phoneNumber = '';
+  String name = '';
+
   MyAppState({required this.lotteryProvider});
 
   void addMessage(Message message) {
@@ -71,14 +76,39 @@ class MyAppState extends ChangeNotifier {
     String lastMessage = messages.last.text;
     try {
       final url = Uri.parse(
-          'http://192.168.0.22:8000/api/v1/lotteries?lotteryName=$lastMessage');
+          'http://192.168.1.7:8000/api/v1/lotteries?lotteryName=$lastMessage');
       final response = await http.get(url);
+
+      // Imprimir el estado de la respuesta
+      print('Response status: ${response.statusCode}');
       if (response.statusCode != 200) {
         throw Exception('Failed to load lottery data');
       }
-      // Successful response
+
+      // Imprimir el cuerpo de la respuesta
+      print('Response body: ${response.body}');
       final Map<String, dynamic> baseData = json.decode(response.body);
+
+      // Imprimir la estructura de baseData
+      print('baseData: $baseData');
+
+      // Verificar si 'data' está presente y no es null
+      if (baseData['data'] == null) {
+        print('data is null');
+        throw Exception('data is null');
+      }
+
+      // Verificar si 'data' es una lista
+      if (!(baseData['data'] is List)) {
+        print('data is not a list');
+        throw Exception('data is not a list');
+      }
+
       final List<dynamic> data = baseData['data'];
+
+      // Imprimir el contenido de 'data'
+      print('data: $data');
+
       if (data.isEmpty) {
         messages
             .add(Message.create('La lotería $lastMessage no existe', false));
@@ -86,17 +116,61 @@ class MyAppState extends ChangeNotifier {
         notifyListeners();
         return;
       }
+
       minSeries = data[0]['minSeries'];
       maxSeries = data[0]['maxSeries'];
-      print(minSeries);
-      print(maxSeries);
+      print('minSeries: $minSeries');
+      print('maxSeries: $maxSeries');
+
       lottery.setName(lastMessage);
       messages.add(Message.create('Lotería encontrada: $lastMessage', false));
       _nextStep();
     } catch (error) {
-      print(error);
+      print('Error: $error');
+      messages.add(Message.create('Error al buscar la lotería', false));
+      _managementError();
     }
   }
+
+void createUserData() async {
+  try {
+    final url = Uri.parse('http://192.168.1.7:8000/api/v1/users/create-update');
+
+        if (!_isValidNumber(identification)) {
+      throw Exception('El campo "document" debe ser un número');
+    }
+    
+    Map<String, dynamic> userData = {
+      "name": name,
+      "document": int.parse(identification),
+      "cellphone": phoneNumber,
+      "email": email,
+    };
+
+    final response = await http.post(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(userData),
+    );
+
+    print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
+
+    if (response.statusCode == 200) {
+      messages.add(Message.create('Datos creados correctamente', false));
+      // Realizar acciones adicionales si es necesario
+    } else {
+      throw Exception('Failed to create user data');
+    }
+
+  } catch (error) {
+    print('Error: $error');
+    messages.add(Message.create('Error al Crear Datos', false));
+    _managementError();
+  }
+}
 
   void validateLottery() {
     String lastMessage = messages.last.text;
@@ -170,6 +244,51 @@ class MyAppState extends ChangeNotifier {
     }
   }
 
+  void askForIdentification() {
+    String lastMessage = messages.last.text;
+    identification = lastMessage;
+    _nextStep(); 
+  }
+
+  void askForEmail() {
+    String lastMessage = messages.last.text;
+    email = lastMessage;
+    _nextStep();
+  }
+
+  void askForPhoneNumber() {
+    String lastMessage = messages.last.text;
+    phoneNumber = lastMessage;
+    _nextStep();
+  }
+
+  void askForName() {
+    String lastMessage = messages.last.text;
+    name = lastMessage;
+    _nextStep();
+  }
+
+void confirmUserInfo() {
+  // Obtener el último mensaje del usuario
+  String lastMessage = messages.last.text.toLowerCase();
+  
+  if (lastMessage == 'si') {
+    // Si el usuario confirma con "si", agrega los mensajes y crea los datos del usuario
+    messages.add(Message.create('Identificación: $identification', false));
+    messages.add(Message.create('Correo: $email', false));
+    messages.add(Message.create('Celular: $phoneNumber', false));
+    messages.add(Message.create('Nombre: $name', false));
+    
+    createUserData();
+    _nextStep(); // Avanza al siguiente paso
+  } else {
+    // Si el usuario no confirma, maneja el caso aquí (por ejemplo, vuelve a preguntar o reinicia el proceso)
+    messages.add(Message.create('Por favor confirma los datos para continuar', false));
+  }
+  notifyListeners(); // Notifica a los listeners para actualizar la UI
+}
+
+
   final List<Stepp> steps = [
     Stepp(
         text: "¿Qué lotería deseas comprar?",
@@ -184,6 +303,21 @@ class MyAppState extends ChangeNotifier {
         text: "¿Deseas agregar otro boleto? (sí/no)",
         action: (state) => state.validateSeries()),
     Stepp(text: "", action: (state) => state.canBuyMoreTickets()),
+    Stepp(
+        text: "Por favor, proporciona tu identificación:",
+        action: (state) => state.askForIdentification()),
+    Stepp(
+        text: "Por favor, proporciona tu correo:",
+        action: (state) => state.askForEmail()),
+    Stepp(
+        text: "Por favor, proporciona tu celular:",
+        action: (state) => state.askForPhoneNumber()),
+    Stepp(
+        text: "Por favor, proporciona tu nombre:",
+        action: (state) => state.askForName()),
+    Stepp(
+        text: "¿Confirmas los siguientes datos? (si/no)",
+        action: (state) => state.confirmUserInfo()),
     Stepp(
         text: "¿Deseas confirmar la compra? (si/no)",
         action: (state) => state.rememberBuy()),
