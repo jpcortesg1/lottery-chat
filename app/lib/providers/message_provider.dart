@@ -11,14 +11,14 @@ class MyAppState extends ChangeNotifier {
 
   final List<Message> messages = [];
   Lottery lottery = Lottery();
-  var currentStep = 0;
+  var currentStep = 5;
   var errorCount = 0;
   var minSeries = 0;
   var maxSeries = 0;
 
-  String identification = '';
+  String document = '';
   String email = '';
-  String phoneNumber = '';
+  String cellphone = '';
   String name = '';
 
   MyAppState({required this.lotteryProvider});
@@ -74,30 +74,24 @@ class MyAppState extends ChangeNotifier {
     String lastMessage = messages.last.text;
     try {
       final url = Uri.parse(
-          'http://192.168.1.7:8000/api/v1/lotteries?lotteryName=$lastMessage');
+          'http://192.168.0.22:8000/api/v1/lotteries?lotteryName=$lastMessage');
       final response = await http.get(url);
 
-      print('Response status: ${response.statusCode}');
       if (response.statusCode != 200) {
         throw Exception('Failed to load lottery data');
       }
 
-      print('Response body: ${response.body}');
       final Map<String, dynamic> baseData = json.decode(response.body);
-      print('baseData: $baseData');
 
       if (baseData['data'] == null) {
-        print('data is null');
         throw Exception('data is null');
       }
 
       if (!(baseData['data'] is List)) {
-        print('data is not a list');
         throw Exception('data is not a list');
       }
 
       final List<dynamic> data = baseData['data'];
-      print('data: $data');
 
       if (data.isEmpty) {
         messages
@@ -109,8 +103,6 @@ class MyAppState extends ChangeNotifier {
 
       minSeries = data[0]['minSeries'];
       maxSeries = data[0]['maxSeries'];
-      print('minSeries: $minSeries');
-      print('maxSeries: $maxSeries');
 
       lottery.setName(lastMessage);
       messages.add(Message.create('Lotería encontrada: $lastMessage', false));
@@ -124,13 +116,13 @@ class MyAppState extends ChangeNotifier {
 
   void createUserData() async {
     try {
-      final url =
-          Uri.parse('http://192.168.1.7:8000/api/v1/users/create-update');
+      final url = Uri.parse(
+          'http://192.168.0.22:8000/api/v1/users/create-update');
 
       Map<String, dynamic> userData = {
         "name": name,
-        "document": int.parse(identification),
-        "cellphone": phoneNumber,
+        "document": int.parse(document),
+        "cellphone": cellphone,
         "email": email,
       };
 
@@ -147,13 +139,17 @@ class MyAppState extends ChangeNotifier {
 
       if (response.statusCode == 200) {
         messages.add(Message.create('Datos creados correctamente', false));
+        _nextStep();
       } else {
-        throw Exception('Failed to create user data');
+        currentStep = 4;
+        _managementError();
+        _nextStep();
       }
     } catch (error) {
       print('Error: $error');
       messages.add(Message.create('Error al Crear Datos', false));
-      _managementError();
+      currentStep = 4;
+      _nextStep();
     }
   }
 
@@ -196,8 +192,8 @@ class MyAppState extends ChangeNotifier {
       return;
     }
     if (lastMessage.toLowerCase() == 'no') {
+      rememberLoteries();
       _nextStep();
-      steps[currentStep].action(this);
       return;
     }
     messages
@@ -206,73 +202,72 @@ class MyAppState extends ChangeNotifier {
     _managementError();
   }
 
-  void rememberBuy() {
+  void rememberLoteries() {
     String message = lotteryProvider.messageOfAllLoteries();
     messages.add(Message.create(message, false));
-    _nextStep();
-    notifyListeners();
-  }
-
-  void confirmBuy() {
-    String lastMessage = messages.last.text;
-    if (lastMessage.toLowerCase() == 'si') {
-      messages.add(Message.create('Compra confirmada', false));
-      _nextStep();
-      currentStep = 0;
-      return;
-    }
-    if (lastMessage.toLowerCase() == 'no') {
-      messages.add(Message.create('Compra cancelada', false));
-      _reset();
-      return;
-    }
-  }
-
-  void askForIdentification() {
-    _nextStep();
   }
 
   void validateIdentification() {
     String lastMessage = messages.last.text;
     if (!_isValidNumber(lastMessage)) {
-      messages.add(Message.create(
-          'Identificación no válida, por favor intenta de nuevo', false));
+      messages.add(Message.create('Identificación no válida', false));
       notifyListeners();
       _managementError();
       return;
     }
-    identification = lastMessage;
+    document = lastMessage;
     _nextStep();
   }
 
-  void askForEmail() {
+  void validateEmail() {
     String lastMessage = messages.last.text;
+    if (!lastMessage.contains('@')) {
+      messages.add(Message.create('Correo no válido', false));
+      notifyListeners();
+      _managementError();
+      return;
+    }
     email = lastMessage;
     _nextStep();
   }
 
-  void askForPhoneNumber() {
+  void validateCellphone() {
     String lastMessage = messages.last.text;
-    phoneNumber = lastMessage;
+    if (!_isValidNumber(lastMessage)) {
+      messages.add(Message.create('Celular no válido', false));
+      notifyListeners();
+      _managementError();
+      return;
+    }
+    cellphone = lastMessage;
     _nextStep();
   }
 
-  void askForName() {
+  void validateName() {
     String lastMessage = messages.last.text;
+    if (lastMessage.isEmpty) {
+      messages.add(Message.create('Nombre no válido', false));
+      notifyListeners();
+      _managementError();
+      return;
+    }
     name = lastMessage;
+    messages.add(Message.create('Identificación: $document', false));
+    messages.add(Message.create('Correo: $email', false));
+    messages.add(Message.create('Celular: $cellphone', false));
+    messages.add(Message.create('Nombre: $name', false));
     _nextStep();
   }
 
   void confirmUserInfo() {
-    messages.add(Message.create('Identificación: $identification', false));
-    messages.add(Message.create('Correo: $email', false));
-    messages.add(Message.create('Celular: $phoneNumber', false));
-    messages.add(Message.create('Nombre: $name', false));
     String lastMessage = messages.last.text;
     if (lastMessage.toLowerCase() == 'si') {
       createUserData();
+      return;
+    }
+    if (lastMessage.toLowerCase() == 'no') {
+      currentStep = 4;
       _nextStep();
-      notifyListeners();
       return;
     }
   }
@@ -292,22 +287,19 @@ class MyAppState extends ChangeNotifier {
         action: (state) => state.validateSeries()),
     Stepp(
         text: "Por favor, proporciona tu identificación:",
-        action: (state) => state.askForIdentification()),
+        action: (state) => state.canBuyMoreTickets()),
     Stepp(
         text: "Por favor, proporciona tu correo:",
-        action: (state) => state.askForEmail()),
+        action: (state) => state.validateIdentification()),
     Stepp(
         text: "Por favor, proporciona tu celular:",
-        action: (state) => state.askForPhoneNumber()),
+        action: (state) => state.validateEmail()),
     Stepp(
         text: "Por favor, proporciona tu nombre:",
-        action: (state) => state.askForName()),
+        action: (state) => state.validateCellphone()),
     Stepp(
         text: "¿Confirmas los siguientes datos? (si/no)",
-        action: (state) => state.confirmUserInfo()),
-    Stepp(
-        text: "¿Deseas confirmar la compra? (si/no)",
-        action: (state) => state.rememberBuy()),
-    Stepp(text: "Buena Suerte", action: (state) => state.confirmBuy()),
+        action: (state) => state.validateName()),
+    Stepp(text: "Se ven los proximos pasos para hacer el pago", action: (state) => state.confirmUserInfo())
   ];
 }

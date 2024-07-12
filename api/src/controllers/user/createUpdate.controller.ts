@@ -12,7 +12,7 @@ export const createUpdate = async (req: Request, res: Response) => {
     });
 
     if (users.length >= 2) {
-      return res.json({
+      return res.status(400).json({
         message:
           "User cannot be created or updated, there are already two users with the same document, cellphone or email",
         error: "Bad Request",
