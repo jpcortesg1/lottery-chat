@@ -6,17 +6,20 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-/// Represents the state of the MyApp application.
-/// This class extends [ChangeNotifier] to provide change notification to its listeners.
 class MyAppState extends ChangeNotifier {
   final LotteryProvider lotteryProvider;
 
   final List<Message> messages = [];
   Lottery lottery = Lottery();
-  var currentStep = 0;
+  var currentStep = 5;
   var errorCount = 0;
   var minSeries = 0;
   var maxSeries = 0;
+
+  String document = '';
+  String email = '';
+  String cellphone = '';
+  String name = '';
 
   MyAppState({required this.lotteryProvider});
 
@@ -73,12 +76,23 @@ class MyAppState extends ChangeNotifier {
       final url = Uri.parse(
           'http://192.168.0.22:8000/api/v1/lotteries?lotteryName=$lastMessage');
       final response = await http.get(url);
+
       if (response.statusCode != 200) {
         throw Exception('Failed to load lottery data');
       }
-      // Successful response
+
       final Map<String, dynamic> baseData = json.decode(response.body);
+
+      if (baseData['data'] == null) {
+        throw Exception('data is null');
+      }
+
+      if (!(baseData['data'] is List)) {
+        throw Exception('data is not a list');
+      }
+
       final List<dynamic> data = baseData['data'];
+
       if (data.isEmpty) {
         messages
             .add(Message.create('La lotería $lastMessage no existe', false));
@@ -86,15 +100,56 @@ class MyAppState extends ChangeNotifier {
         notifyListeners();
         return;
       }
+
       minSeries = data[0]['minSeries'];
       maxSeries = data[0]['maxSeries'];
-      print(minSeries);
-      print(maxSeries);
+
       lottery.setName(lastMessage);
       messages.add(Message.create('Lotería encontrada: $lastMessage', false));
       _nextStep();
     } catch (error) {
-      print(error);
+      print('Error: $error');
+      messages.add(Message.create('Error al buscar la lotería', false));
+      _managementError();
+    }
+  }
+
+  void createUserData() async {
+    try {
+      final url = Uri.parse(
+          'http://192.168.0.22:8000/api/v1/users/create-update');
+
+      Map<String, dynamic> userData = {
+        "name": name,
+        "document": int.parse(document),
+        "cellphone": cellphone,
+        "email": email,
+      };
+
+      final response = await http.post(
+        url,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(userData),
+      );
+
+      print('Response status: ${response.statusCode}');
+      print('Response body: ${response.body}');
+
+      if (response.statusCode == 200) {
+        messages.add(Message.create('Datos creados correctamente', false));
+        _nextStep();
+      } else {
+        currentStep = 4;
+        _managementError();
+        _nextStep();
+      }
+    } catch (error) {
+      print('Error: $error');
+      messages.add(Message.create('Error al Crear Datos', false));
+      currentStep = 4;
+      _nextStep();
     }
   }
 
@@ -137,8 +192,8 @@ class MyAppState extends ChangeNotifier {
       return;
     }
     if (lastMessage.toLowerCase() == 'no') {
+      rememberLoteries();
       _nextStep();
-      steps[currentStep].action(this);
       return;
     }
     messages
@@ -147,25 +202,72 @@ class MyAppState extends ChangeNotifier {
     _managementError();
   }
 
-  void rememberBuy() {
+  void rememberLoteries() {
     String message = lotteryProvider.messageOfAllLoteries();
-    print(message);
     messages.add(Message.create(message, false));
-    _nextStep();
-    notifyListeners();
   }
 
-  void confirmBuy() {
+  void validateIdentification() {
+    String lastMessage = messages.last.text;
+    if (!_isValidNumber(lastMessage)) {
+      messages.add(Message.create('Identificación no válida', false));
+      notifyListeners();
+      _managementError();
+      return;
+    }
+    document = lastMessage;
+    _nextStep();
+  }
+
+  void validateEmail() {
+    String lastMessage = messages.last.text;
+    if (!lastMessage.contains('@')) {
+      messages.add(Message.create('Correo no válido', false));
+      notifyListeners();
+      _managementError();
+      return;
+    }
+    email = lastMessage;
+    _nextStep();
+  }
+
+  void validateCellphone() {
+    String lastMessage = messages.last.text;
+    if (!_isValidNumber(lastMessage)) {
+      messages.add(Message.create('Celular no válido', false));
+      notifyListeners();
+      _managementError();
+      return;
+    }
+    cellphone = lastMessage;
+    _nextStep();
+  }
+
+  void validateName() {
+    String lastMessage = messages.last.text;
+    if (lastMessage.isEmpty) {
+      messages.add(Message.create('Nombre no válido', false));
+      notifyListeners();
+      _managementError();
+      return;
+    }
+    name = lastMessage;
+    messages.add(Message.create('Identificación: $document', false));
+    messages.add(Message.create('Correo: $email', false));
+    messages.add(Message.create('Celular: $cellphone', false));
+    messages.add(Message.create('Nombre: $name', false));
+    _nextStep();
+  }
+
+  void confirmUserInfo() {
     String lastMessage = messages.last.text;
     if (lastMessage.toLowerCase() == 'si') {
-      messages.add(Message.create('Compra confirmada', false));
-      _nextStep();
-      currentStep = 0;
+      createUserData();
       return;
     }
     if (lastMessage.toLowerCase() == 'no') {
-      messages.add(Message.create('Compra cancelada', false));
-      _reset();
+      currentStep = 4;
+      _nextStep();
       return;
     }
   }
@@ -183,10 +285,21 @@ class MyAppState extends ChangeNotifier {
     Stepp(
         text: "¿Deseas agregar otro boleto? (sí/no)",
         action: (state) => state.validateSeries()),
-    Stepp(text: "", action: (state) => state.canBuyMoreTickets()),
     Stepp(
-        text: "¿Deseas confirmar la compra? (si/no)",
-        action: (state) => state.rememberBuy()),
-    Stepp(text: "Buena Suerte", action: (state) => state.confirmBuy()),
+        text: "Por favor, proporciona tu identificación:",
+        action: (state) => state.canBuyMoreTickets()),
+    Stepp(
+        text: "Por favor, proporciona tu correo:",
+        action: (state) => state.validateIdentification()),
+    Stepp(
+        text: "Por favor, proporciona tu celular:",
+        action: (state) => state.validateEmail()),
+    Stepp(
+        text: "Por favor, proporciona tu nombre:",
+        action: (state) => state.validateCellphone()),
+    Stepp(
+        text: "¿Confirmas los siguientes datos? (si/no)",
+        action: (state) => state.validateName()),
+    Stepp(text: "Se ven los proximos pasos para hacer el pago", action: (state) => state.confirmUserInfo())
   ];
 }
