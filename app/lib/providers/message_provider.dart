@@ -11,7 +11,7 @@ class MyAppState extends ChangeNotifier {
 
   final List<Message> messages = [];
   Lottery lottery = Lottery();
-  var currentStep = 5;
+  var currentStep = 0;
   var errorCount = 0;
   var minSeries = 0;
   var maxSeries = 0;
@@ -21,11 +21,17 @@ class MyAppState extends ChangeNotifier {
   String cellphone = '';
   String name = '';
 
+  bool waitingForUpdateConfirmation = false; // Nuevo estado
+
   MyAppState({required this.lotteryProvider});
 
   void addMessage(Message message) {
     messages.add(message);
-    steps[currentStep].action(this);
+    if (waitingForUpdateConfirmation) {
+      handleUpdateConfirmation(message.text);
+    } else {
+      steps[currentStep].action(this);
+    }
   }
 
   void _managementError() {
@@ -57,11 +63,22 @@ class MyAppState extends ChangeNotifier {
     notifyListeners();
   }
 
+  void _goToStep(int step) {
+    currentStep = step;
+    String text = steps[currentStep].text;
+    if (text.isNotEmpty) {
+      messages.add(Message.create(text, false));
+    }
+    errorCount = 0;
+    notifyListeners();
+  }
+
   void _reset() {
     messages.clear();
     lotteryProvider.reset();
     currentStep = 0;
     errorCount = 0;
+    waitingForUpdateConfirmation = false; // Reinicia el estado
     notifyListeners();
   }
 
@@ -74,7 +91,7 @@ class MyAppState extends ChangeNotifier {
     String lastMessage = messages.last.text;
     try {
       final url = Uri.parse(
-          'http://192.168.0.22:8000/api/v1/lotteries?lotteryName=$lastMessage');
+          'http://192.168.1.7:8000/api/v1/lotteries?lotteryName=$lastMessage');
       final response = await http.get(url);
 
       if (response.statusCode != 200) {
@@ -87,7 +104,7 @@ class MyAppState extends ChangeNotifier {
         throw Exception('data is null');
       }
 
-      if (!(baseData['data'] is List)) {
+      if (baseData['data'] is! List) {
         throw Exception('data is not a list');
       }
 
@@ -116,8 +133,8 @@ class MyAppState extends ChangeNotifier {
 
   void createUserData() async {
     try {
-      final url = Uri.parse(
-          'http://192.168.0.22:8000/api/v1/users/create-update');
+      final url =
+          Uri.parse('http://192.168.1.7:8000/api/v1/users/create-update');
 
       Map<String, dynamic> userData = {
         "name": name,
@@ -146,11 +163,58 @@ class MyAppState extends ChangeNotifier {
         _nextStep();
       }
     } catch (error) {
-      print('Error: $error');
       messages.add(Message.create('Error al Crear Datos', false));
       currentStep = 4;
       _nextStep();
     }
+  }
+
+  void validateUserData() async {
+    try {
+      final url =
+          Uri.parse('http://192.168.1.7:8000/api/v1/users?document=$document');
+      final response = await http.get(url);
+
+      print(response);
+      print('Response status: ${response.statusCode}');
+      if (response.statusCode != 200) {
+        throw Exception('Failed to load document data');
+      }
+
+      final Map<String, dynamic> baseData = json.decode(response.body);
+      print(baseData);
+
+      if (baseData['data'] == null || baseData['data'] is! List) {
+        throw Exception('Invalid data format');
+      }
+
+      if (baseData['data'].isNotEmpty) {
+        messages.add(
+            Message.create('¿Quieres actualizar los datos? (si / no)', false));
+        notifyListeners();
+        waitingForUpdateConfirmation = true; // Espera la confirmación
+      } else {
+        _nextStep();
+      }
+    } catch (error) {
+      print('Error: $error');
+      messages.add(Message.create('Error al Validar Identificacion', false));
+      _managementError();
+    }
+  }
+
+  void handleUpdateConfirmation(String response) {
+    if (response.toLowerCase() == 'si') {
+      _goToStep(4); // Salta al paso 4
+    } else if (response.toLowerCase() == 'no') {
+      _goToStep(9); // Salta al paso 9
+    } else {
+      messages.add(Message.create(
+          'Respuesta no válida, por favor responde "si" o "no"', false));
+      notifyListeners();
+      _managementError();
+    }
+    waitingForUpdateConfirmation = false; // Restablece la bandera
   }
 
   void validateLottery() {
@@ -216,7 +280,7 @@ class MyAppState extends ChangeNotifier {
       return;
     }
     document = lastMessage;
-    _nextStep();
+    validateUserData();
   }
 
   void validateEmail() {
@@ -252,10 +316,15 @@ class MyAppState extends ChangeNotifier {
       return;
     }
     name = lastMessage;
-    messages.add(Message.create('Identificación: $document', false));
-    messages.add(Message.create('Correo: $email', false));
-    messages.add(Message.create('Celular: $cellphone', false));
-    messages.add(Message.create('Nombre: $name', false));
+
+    String combinedMessage = '''
+  Identificación: $document
+  Correo: $email
+  Celular: $cellphone
+  Nombre: $name
+  ''';
+
+    messages.add(Message.create(combinedMessage, false));
     _nextStep();
   }
 
@@ -300,6 +369,8 @@ class MyAppState extends ChangeNotifier {
     Stepp(
         text: "¿Confirmas los siguientes datos? (si/no)",
         action: (state) => state.validateName()),
-    Stepp(text: "Se ven los proximos pasos para hacer el pago", action: (state) => state.confirmUserInfo())
+    Stepp(
+        text: "Se ven los próximos pasos para hacer el pago",
+        action: (state) => state.confirmUserInfo())
   ];
 }
