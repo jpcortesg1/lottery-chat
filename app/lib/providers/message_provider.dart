@@ -205,16 +205,16 @@ class MyAppState extends ChangeNotifier {
 
   void handleUpdateConfirmation(String response) {
     if (response.toLowerCase() == 'si') {
-      _goToStep(4); // Salta al paso 4
+      _nextStep();
     } else if (response.toLowerCase() == 'no') {
-      _goToStep(9); // Salta al paso 9
+      _goToStep(9);
     } else {
       messages.add(Message.create(
           'Respuesta no válida, por favor responde "si" o "no"', false));
       notifyListeners();
       _managementError();
     }
-    waitingForUpdateConfirmation = false; // Restablece la bandera
+    waitingForUpdateConfirmation = false;
   }
 
   void validateLottery() {
