@@ -5,6 +5,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc && npm run copy",
+    "start": "node dist/index.js",
     "copy": "copyfiles -u 1 src/**/*.json dist",
     "dev": "tsc -w & npm run copy && nodemon dist/index.js",
     "dev:tsc": "nodemon src/index.ts"
