@@ -1,16 +1,26 @@
-# app
+Un nuevo proyecto de Flutter.
 
-A new Flutter project.
+## Empezando
 
-## Getting Started
+Este proyecto es una app móvil que se usara especificamente para compra de boletos de loteria.
 
-This project is a starting point for a Flutter application.
+Algunos recursos para ayudarte a comenzar si aun no conoces bien la tecnología de flutter:
 
-A few resources to get you started if this is your first Flutter project:
+- [Laboratorio: escribe tu primera aplicación Flutter](https://docs.flutter.dev/get-started/codelab)
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Para correr la app se necesita previemante lo descrito en el tutorial o link anterior, esto es un paso a paso breve de como se creo e inicio el proyecto.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Validalo con este paso a paso, despues de todo estara lista para correrla: 
+- [Laboratorio: Plataforma de desarrollo](https://docs.flutter.dev/get-started/install)
+
+Depues de esto, debemos pararnos en el acrchivo main de nuestra aplicación el cual se llama main.dart.
+En esta instacia la idea es que como este es nuestro archivo ejecutable, lo corremos precinando en el boton de play del VS code:
+
+<img width="175" alt="Screenshot 2024-07-16 at 4 49 29 PM" src="https://github.com/user-attachments/assets/a232f2db-d31c-4b8f-850d-6461eac1a041">
+
+Esto nos abrira una ventana la cual nos va a decir en que dispositivo queremos correr nuestra App:
+ - Chrome.
+ - Simulator, osea un android studio o xcode.
+ - Desktop.
+En este caso por mejor experiencia se recoimenda simular o correr en un Simulator ya que es una App móvil.
+
